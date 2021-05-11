@@ -202,6 +202,8 @@ class Ui_MainWindow(object):
         self.radioButton_2.setObjectName("radioButton_2")
         self.toolButton_4 = QtWidgets.QToolButton(self.frame)
         self.toolButton_4.setGeometry(QtCore.QRect(160, 50, 101, 41))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("img/firefox.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.toolButton_4.setIcon(icon)
         self.toolButton_4.setIconSize(QtCore.QSize(200, 200))
         self.toolButton_4.setObjectName("toolButton_4")
@@ -266,7 +268,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Google Maps Crawler"))
         self.label_2.setText(_translate("MainWindow", "SELECIONAR NAVEGADOR:"))
         self.radioButton.setText(_translate("MainWindow", "Chrome"))
         self.radioButton_2.setText(_translate("MainWindow", "Firefox"))
