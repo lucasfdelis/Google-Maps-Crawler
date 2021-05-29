@@ -15,10 +15,12 @@ from tkinter import *
 import xlwings as xw
 import time
 
+
 class Ui_back(object):
-    def __init__(self,navegador,sheet):
+    def __init__(self, navegador, sheet):
         self.navegador = navegador
         self.sheet = sheet
+
     def main(self):
         navegador = self.navegador
         sheet = self.sheet
@@ -32,7 +34,7 @@ class Ui_back(object):
             driver = webdriver.Chrome()
         if(navegador == '2'):
             driver = webdriver.Firefox()
-    
+
         driver.get('https://www.google.com.br/maps/')
         time.sleep(5)
         k = 2
@@ -40,10 +42,13 @@ class Ui_back(object):
         nome_ant = numero_ant = endereco_ant = ''
         while True:
             try:
-                nome = driver.find_element_by_xpath('//*[@id="pane"]/div/div[1]/div/div/div[2]/div[1]/div[1]/div[1]/h1/span[1]')
-                numero = driver.find_element_by_css_selector("[data-tooltip='Copiar número de telefone']")
-                endereco = driver.find_element_by_css_selector("[data-item-id='address']")
-                if(len(nome.text)>0 and len(numero.text)>0 and len(endereco.text)>0):
+                nome = driver.find_element_by_xpath(
+                    '//*[@id="pane"]/div/div[1]/div/div/div[2]/div[1]/div[1]/div[1]/h1/span[1]')
+                numero = driver.find_element_by_css_selector(
+                    "[data-tooltip='Copiar número de telefone']")
+                endereco = driver.find_element_by_css_selector(
+                    "[data-item-id='address']")
+                if(len(nome.text) > 0 and len(numero.text) > 0 and len(endereco.text) > 0):
                     if(nome_ant != nome.text and numero_ant != numero.text and endereco_ant != endereco.text):
                         print(nome.text)
                         print(numero.text)
@@ -58,7 +63,8 @@ class Ui_back(object):
                         k = k+1
             except:
                 pass
-        
+
+
 class Ui_MainWindow(object):
     def verificacao(self):
         try:
@@ -68,16 +74,18 @@ class Ui_MainWindow(object):
         except Exception as e:
             print("ERRO NA VERIFICACAO (def verificacao)")
             print(e)
+
     def verificacao_var(self):
         try:
             if(self.radioButton.isChecked()):
                 self.navegador = '1'
             if(self.radioButton_2.isChecked()):
                 self.navegador = '2'
-            self.passing = Ui_back(self.navegador,self.sheet)
+            self.passing = Ui_back(self.navegador, self.sheet)
         except Exception as e:
             print("ERRO NA VERIFICAÇÃO DE VARIÁVEIS (def verificacao_var)")
             print(e)
+
     def showChrome(self):
         try:
             self.toolButton_4.setIcon(self.icon2)
@@ -85,6 +93,7 @@ class Ui_MainWindow(object):
         except Exception as e:
             print("ERRO AO EXIBIR ÍCONE DO CHROME (def showChrome)")
             print(e)
+
     def showFirefox(self):
         try:
             self.toolButton_4.setIcon(self.icon1)
@@ -92,11 +101,13 @@ class Ui_MainWindow(object):
         except Exception as e:
             print("ERRO AO EXIBIR ÍCONE DO FIREFOX (def showFirefox)")
             print(e)
+
     def escolherPlanilha(self):
         try:
             root = Tk()
             root.withdraw()
-            self.sheet = filedialog.askopenfilename(title='Escolher planilha para registro de dados')
+            self.sheet = filedialog.askopenfilename(
+                title='Escolher planilha para registro de dados')
             self.nomelista = self.sheet.split('/')
             self.nomelista = self.nomelista[-1]
             self.label_4.setText(self.nomelista)
@@ -104,86 +115,11 @@ class Ui_MainWindow(object):
         except Exception as e:
             print("ERRO AO ESCOLHER PLANILHA (def escolherPlanilha)")
             print(e)
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setFixedSize(352, 450)
-        MainWindow.setStyleSheet("*{\n"
-"font-family: century gothic;\n"
-"font-size: 15px\n"
-"}\n"
-"\n"
-"QMainWindow{\n"
-"background:url(img/background.png);\n"
-"} \n"
-"\n"
-"#label\n"
-"{\n"
-"font-size: 20px;\n"
-"}\n"
-"\n"
-"#label_4\n"
-"{\n"
-"color: yellow\n"
-"}\n"
-"\n"
-"QToolButton\n"
-"{\n"
-"background: transparent;\n"
-"border-radius: 5px\n"
-"}\n"
-"\n"
-"QPushButton\n"
-"{\n"
-"color: #333;\n"
-"background: white;\n"
-"border-radius: 5px\n"
-"}\n"
-"\n"
-"QPushButton:hover\n"
-"{\n"
-"color: 333;\n"
-"background: gray;\n"
-"border-radius: 5px\n"
-"}\n"
-"\n"
-"QFrame\n"
-"{\n"
-"background: black;\n"                                 
-"border-radius: 5px\n"
-"}\n"
-"#frame\n"
-"{\n"
-"border: 1px solid white;\n"
-"}\n"
-"#frame_2\n"
-"{\n"
-"border: 1px solid white;\n"
-"}\n"
-"#frame_3\n"
-"{\n"
-"border: 1px solid white;\n"
-"}\n"
-"#frame_4\n"
-"{\n"
-"border: 1px solid white;\n"
-"}\n"
-"\n"
-"\n"
-"QLabel\n"
-"{\n"
-"background: transparent;\n"
-"color: white;\n"
-"}\n"
-"\n"
-"QRadioButton\n"
-"{\n"
-"color: white\n"
-"}\n"
-"\n"
-"#label_23\n"
-"{\n"
-"font-size:9px;\n"
-"}")
+        MainWindow.setStyleSheet(open('interface.css').read())
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.frame = QtWidgets.QFrame(self.centralwidget)
@@ -203,14 +139,17 @@ class Ui_MainWindow(object):
         self.toolButton_4 = QtWidgets.QToolButton(self.frame)
         self.toolButton_4.setGeometry(QtCore.QRect(160, 50, 101, 41))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("img/firefox.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("img/firefox.png"),
+                       QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.toolButton_4.setIcon(icon)
         self.toolButton_4.setIconSize(QtCore.QSize(200, 200))
         self.toolButton_4.setObjectName("toolButton_4")
         self.icon1 = QtGui.QIcon()
-        self.icon1.addPixmap(QtGui.QPixmap("img/firefox.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.icon1.addPixmap(QtGui.QPixmap("img/firefox.png"),
+                             QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.icon2 = QtGui.QIcon()
-        self.icon2.addPixmap(QtGui.QPixmap("img/chrome.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.icon2.addPixmap(QtGui.QPixmap("img/chrome.png"),
+                             QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.toolButton_4.hide()
         self.frame_2 = QtWidgets.QFrame(self.centralwidget)
         self.frame_2.setGeometry(QtCore.QRect(10, 10, 331, 91))
@@ -223,7 +162,8 @@ class Ui_MainWindow(object):
         self.toolButton_5 = QtWidgets.QToolButton(self.frame_2)
         self.toolButton_5.setGeometry(QtCore.QRect(0, 10, 71, 71))
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("img/maps.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap("img/maps.png"),
+                        QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.toolButton_5.setIcon(icon1)
         self.toolButton_5.setIconSize(QtCore.QSize(200, 200))
         self.toolButton_5.setObjectName("toolButton_5")
@@ -268,18 +208,23 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Google Maps Crawler"))
+        MainWindow.setWindowTitle(_translate(
+            "MainWindow", "Google Maps Crawler"))
         self.label_2.setText(_translate("MainWindow", "SELECIONAR NAVEGADOR:"))
         self.radioButton.setText(_translate("MainWindow", "Chrome"))
         self.radioButton_2.setText(_translate("MainWindow", "Firefox"))
         self.toolButton_4.setText(_translate("MainWindow", "..."))
         self.label.setText(_translate("MainWindow", "GOOGLE MAPS CRAWLER"))
         self.toolButton_5.setText(_translate("MainWindow", "..."))
-        self.pushButton_7.setText(_translate("MainWindow", "ABRIR GOOGLE MAPS"))
-        self.label_23.setText(_translate("MainWindow", "Versão 1.0.0 | Made by Lucas Alves, 2021 | Github: @lucasfdelis"))
+        self.pushButton_7.setText(_translate(
+            "MainWindow", "ABRIR GOOGLE MAPS"))
+        self.label_23.setText(_translate(
+            "MainWindow", "Versão 1.0.0 | Made by Lucas Alves, 2021 | Github: @lucasfdelis"))
         self.pushButton_5.setText(_translate("MainWindow", "SELECIONAR"))
         self.label_3.setText(_translate("MainWindow", "SELECIONAR PLANILHA:"))
-        self.label_4.setText(_translate("MainWindow", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
+        self.label_4.setText(_translate(
+            "MainWindow", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
+
 
 if __name__ == "__main__":
     import sys
