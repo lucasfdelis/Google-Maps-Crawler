@@ -12,8 +12,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from tkinter import filedialog
 from selenium import webdriver
 from tkinter import *
-import xlwings as xw
+import pandas as pd
 import time
+import chromedriver_autoinstaller
+# from webdriver_manager.chrome import ChromeDriverManager
 
 
 class Ui_back(object):
@@ -24,11 +26,8 @@ class Ui_back(object):
     def main(self):
         navegador = self.navegador
         sheet = self.sheet
-        wb = xw.Book(sheet)
-        sht1 = wb.sheets['Plan1']
-        sht1.range('A1').value = 'NOME'
-        sht1.range('B1').value = 'ENDEREÇO'
-        sht1.range('C1').value = 'NUMERO'
+
+        chromedriver_autoinstaller.install()
 
         if(navegador == '1'):
             driver = webdriver.Chrome()
@@ -40,26 +39,42 @@ class Ui_back(object):
         k = 2
 
         nome_ant = numero_ant = endereco_ant = ''
+
+        nomes = []
+        numeros = []
+        enderecos = []
+
         while True:
             try:
                 nome = driver.find_element_by_xpath(
-                    '//*[@id="pane"]/div/div[1]/div/div/div[2]/div[1]/div[1]/div[1]/h1/span[1]')
+                    '//*[@id="QA0Szd"]/div/div/div[1]/div[3]/div/div[1]/div/div/div[2]/div[2]/div[1]/div[1]/div[1]/h1/span[1]')
                 numero = driver.find_element_by_css_selector(
                     "[data-tooltip='Copiar número de telefone']")
                 endereco = driver.find_element_by_css_selector(
                     "[data-item-id='address']")
                 if(len(nome.text) > 0 and len(numero.text) > 0 and len(endereco.text) > 0):
                     if(nome_ant != nome.text and numero_ant != numero.text and endereco_ant != endereco.text):
+
                         print(nome.text)
                         print(numero.text)
                         print(endereco.text)
                         print('')
-                        sht1.range('A'+str(k)).value = nome.text
-                        sht1.range('B'+str(k)).value = numero.text
-                        sht1.range('C'+str(k)).value = endereco.text
+
+                        nomes.append(nome.text)
+                        numeros.append(numero.text)
+                        enderecos.append(endereco.text)
+
+                        d = {'NOME': nomes, 'ENDEREÇO': numeros,
+                             'NUMERO': enderecos}
+
+                        df = pd.DataFrame(data=d)
+
+                        df.to_excel(sheet, index=False)
+
                         nome_ant = nome.text
                         numero_ant = numero.text
                         endereco_ant = endereco.text
+
                         k = k+1
             except:
                 pass
@@ -219,7 +234,7 @@ class Ui_MainWindow(object):
         self.pushButton_7.setText(_translate(
             "MainWindow", "ABRIR GOOGLE MAPS"))
         self.label_23.setText(_translate(
-            "MainWindow", "Versão 1.0.0 | Made by Lucas Alves, 2021 | Github: @lucasfdelis"))
+            "MainWindow", "Versão 1.1.0 | Made by Lucas Alves, 2022 | Github: @lucasfdelis"))
         self.pushButton_5.setText(_translate("MainWindow", "SELECIONAR"))
         self.label_3.setText(_translate("MainWindow", "SELECIONAR PLANILHA:"))
         self.label_4.setText(_translate(
