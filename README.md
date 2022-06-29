@@ -7,5 +7,11 @@ Ferramentas utilizadas:
 
 - Python
 - PyQt5
-- selenium
-- xlwings
+- Selenium
+- Pandas
+
+Instale as bibliotecas necessárias, disponíveis em `requirements.txt`:
+
+```
+pip install -r requirements.txt
+```
