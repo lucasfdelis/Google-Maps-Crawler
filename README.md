@@ -15,3 +15,7 @@ Instale as bibliotecas necessárias, disponíveis em `requirements.txt`:
 ```
 pip install -r requirements.txt
 ```
+Como utilizar o programa:
+
+https://user-images.githubusercontent.com/39414546/204116584-8b733767-7937-4cc4-a257-d5261dd0e1ef.mp4
+
